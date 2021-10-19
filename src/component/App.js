@@ -5,23 +5,23 @@ import Login from "./authentication/Login"
 import { AuthProvider } from "../contexts/AuthContext"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import PrivateRoute from "./authentication/PrivateRoute"
-import CenteredContainer from "./authentication/CencentedContainer";
+import Dashboard from "./poll/Dashboard";
 
 function App(){
     
-    return  (
-            <CenteredContainer>
-            
-                <Router>
-                    <AuthProvider>
-                        <Switch>
-                            <PrivateRoute exact path="/" component={Profile} />
-                            <Route path="/signup" component={Signup} />
-                            <Route path="/login" component={Login} />
-                        </Switch>
-                    </AuthProvider>
-                </Router>
-            </CenteredContainer>
+    return  (  
+        <Router>
+            <AuthProvider>
+                <Switch>
+
+                    <PrivateRoute exact path="/" component={Dashboard} />
+
+                    <PrivateRoute exact path="/user" component={Profile} />
+                    <Route path="/signup" component={Signup} />
+                    <Route path="/login" component={Login} />
+                </Switch>
+            </AuthProvider>
+        </Router>
     )
 }
 

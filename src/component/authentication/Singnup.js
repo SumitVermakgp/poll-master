@@ -3,6 +3,7 @@ import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../../contexts/AuthContext"
 import { Link } from "react-router-dom"
 import { useHistory } from "react-router-dom"
+import CenteredContainer from "./CencentedContainer"
 
 export default function Signup() {
   const emailRef = useRef()
@@ -13,6 +14,7 @@ export default function Signup() {
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()
+  const [success, setSuccess] = useState(false)
 
   
   async function handleSubmit(e) {
@@ -26,6 +28,7 @@ export default function Signup() {
       setError("")
       setLoading(true)
       await signup(emailRef.current.value, passwordRef.current.value)
+      setSuccess(true)
       history.push("/login")
     } catch {
       setError("Sorry, Failed to create an account. Hvae you already registered this email")
@@ -35,11 +38,12 @@ export default function Signup() {
   }
 
   return (
-    <>
+    <CenteredContainer>
       <Card >
         <Card.Body>
           <h2 className="text-center mb-4">Sign Up</h2>
           {error && <Alert variant="danger">{error}</Alert>}
+          {success && <Alert variant="success">Success</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group id="email">
               <Form.Label>Email</Form.Label>
@@ -57,11 +61,12 @@ export default function Signup() {
               Sign Up
             </Button>
           </Form>
+          
         </Card.Body>
       </Card>
       <div className="w-100 text-center mt-2">
         Already have an account? <Link to="/login">Log In</Link>
       </div>
-    </>
+      </CenteredContainer>
   )
 }
