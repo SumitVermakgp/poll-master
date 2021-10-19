@@ -1,7 +1,8 @@
 import React from "react"
+import Signup from "./Singnup";
 
 function App(){
-    return "Poll Master HomePage"
+    return <Signup />
 }
 
 export default App;
