@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react"
 import { Form, Button, Card, Alert } from "react-bootstrap"
-import { useAuth } from "../contexts/AuthContext"
+import { useAuth } from "../../contexts/AuthContext"
 import { Link } from "react-router-dom"
 import { useHistory } from "react-router-dom"
 
@@ -36,7 +36,7 @@ export default function Signup() {
 
   return (
     <>
-      <Card className="mt-4">
+      <Card >
         <Card.Body>
           <h2 className="text-center mb-4">Sign Up</h2>
           {error && <Alert variant="danger">{error}</Alert>}
