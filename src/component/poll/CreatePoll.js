@@ -1,9 +1,11 @@
-import React, { useRef } from "react"
-import { Form, Button, Card } from "react-bootstrap"
-//import CenteredContainer from "../authentication/CencentedContainer"
+import React, { useRef, useState } from "react"
+import { Form, Button, Card , Alert} from "react-bootstrap"
 import PollContainer from "./PollContainer"
-
-//const [poll, setPoll] = useState
+//import { collection } from "firebase/firestore"
+import { db } from "../../firebase"
+import { useAuth } from "../../contexts/AuthContext"
+import { useHistory } from "react-router-dom"
+import { collection, addDoc } from "firebase/firestore";
 
 export default function CreatePoll() {
 
@@ -13,12 +15,55 @@ export default function CreatePoll() {
   const optionThreeRef = useRef()
   const optionFourRef = useRef()
 
+  const history = useHistory()
+
+
+  const { currentUser } = useAuth()
+  const [error, setError] = useState("")
+
+  async function handleSubmit(e) { 
+    e.preventDefault()
+
+    //const db = collection(firestore, 'polls')
+    //const docRef = collection(db, "polls")
+    //const docRef = db.collection('users').doc('alovelace');
+
+    const poll = {
+      userId: currentUser.email,
+      question: questionRef.current.value,
+      optionOne: optionOneRef.current.value,
+      optionTwo: optionTwoRef.current.value,
+      optionThree: optionThreeRef.current.value,
+      optionFour: optionFourRef.current.value,
+      optionOneVotes: 0,
+      optionTwoVotes: 0,
+      optionThreeVotes: 0,
+      optionFourVotes: 0,
+    };
+    try {
+    setError("")
+    //await pollCollection.add(poll)
+    //await db.collection('cities').doc('LA').set(data);
+    //await setDoc(pollCollection, pollData, {merge: true})
+    //await docRef.add(poll)
+
+    const docRef = await addDoc(collection(db, "polls"), poll);
+    console.log("Document written with ID: ", docRef.id);
+    history.push("/viewpoll")
+    } catch (e) {
+      console.log(e)
+      setError("Failed add poll!")
+    }
+
+  }
+
   return (
       <PollContainer>
       <Card >
         <Card.Body>
           <h2 className="text-center mb-4">Enter your Poll</h2>
-          <Form>
+          {error && <Alert variant="danger">{error}</Alert>}
+          <Form onSubmit={handleSubmit}>
             <Form.Group id="question" className="mt-4">
               <Form.Label>Question</Form.Label>
               <Form.Control as="textarea" rows={3} ref={questionRef} required />
@@ -50,6 +95,9 @@ export default function CreatePoll() {
           </Form>
         </Card.Body>
       </Card>
+      <div className="w-100 text-center mt-2">
+        View Your Poll?  View 
+      </div>
     </PollContainer>
   )
 } 
