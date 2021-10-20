@@ -6,6 +6,8 @@ import { AuthProvider } from "../contexts/AuthContext"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 import PrivateRoute from "./authentication/PrivateRoute"
 import Dashboard from "./poll/Dashboard";
+import ViewPoll from "./poll/ViewPoll";
+
 
 function App(){
     
@@ -15,6 +17,9 @@ function App(){
                 <Switch>
 
                     <PrivateRoute exact path="/" component={Dashboard} />
+                    <PrivateRoute path="/viewpoll" component={ViewPoll} />
+                    
+                    
 
                     <PrivateRoute exact path="/user" component={Profile} />
                     <Route path="/signup" component={Signup} />
@@ -26,3 +31,5 @@ function App(){
 }
 
 export default App;
+
+//<PrivateRoute exact path="/" component={ViewPoll} />

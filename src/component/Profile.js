@@ -1,8 +1,9 @@
 import React, { useState } from "react"
 import { Card, Button, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
-import { useHistory } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 import CenteredContainer from "../component/authentication/CencentedContainer"
+
 
 export default function Profile() {
   const [error, setError] = useState("")
@@ -32,6 +33,11 @@ export default function Profile() {
       <div className="w-100 text-center mt-2">
         <Button variant="link" onClick={handleLogout}>
           Log Out
+        </Button>
+      </div>
+      <div className="w-100 text-center mt-2">
+        <Button variant="link">
+          <Link to="/viewpoll"> View Polls </Link>
         </Button>
       </div>
       </CenteredContainer>

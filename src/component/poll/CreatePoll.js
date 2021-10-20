@@ -4,7 +4,7 @@ import PollContainer from "./PollContainer"
 //import { collection } from "firebase/firestore"
 import { db } from "../../firebase"
 import { useAuth } from "../../contexts/AuthContext"
-import { useHistory } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 import { collection, addDoc } from "firebase/firestore";
 
 export default function CreatePoll() {
@@ -24,10 +24,6 @@ export default function CreatePoll() {
   async function handleSubmit(e) { 
     e.preventDefault()
 
-    //const db = collection(firestore, 'polls')
-    //const docRef = collection(db, "polls")
-    //const docRef = db.collection('users').doc('alovelace');
-
     const poll = {
       userId: currentUser.email,
       question: questionRef.current.value,
@@ -42,11 +38,6 @@ export default function CreatePoll() {
     };
     try {
     setError("")
-    //await pollCollection.add(poll)
-    //await db.collection('cities').doc('LA').set(data);
-    //await setDoc(pollCollection, pollData, {merge: true})
-    //await docRef.add(poll)
-
     const docRef = await addDoc(collection(db, "polls"), poll);
     console.log("Document written with ID: ", docRef.id);
     history.push("/viewpoll")
@@ -96,7 +87,9 @@ export default function CreatePoll() {
         </Card.Body>
       </Card>
       <div className="w-100 text-center mt-2">
-        View Your Poll?  View 
+        <Button variant="link">
+          <Link to="/viewpoll"> View My Polls </Link>
+        </Button>
       </div>
     </PollContainer>
   )
